@@ -1,5 +1,6 @@
-public class FirstStep {
-    public class Character {
+package majorAssignmentTopic1;
+public class Character {
+  
 		private String name;
 		private int health;
 		private int strength;
@@ -12,7 +13,6 @@ public class FirstStep {
         this.strength = strength;
         this.intelligence = intelligence;
         this.defense = defense;
-    } 
-        
+    
     }
 }

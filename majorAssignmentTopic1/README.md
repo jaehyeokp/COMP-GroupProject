@@ -1,4 +1,19 @@
-# COMP1010-GroupK-Project
+# COMP1010-GroupK-
+
+//Structure(지워도됨 나중에에)
+majorAssignmentRpgGame.zip
+└── majorAssignmentTopic1
+    ├── Client.java
+    ├── Battle.java
+    ├── Team.java
+    ├── Character.java
+    ├── Dice.java
+    ├── Action.java
+    ├── StatusEffect.java (optional)
+    ├── README.txt
+    ├── UML Diagram.png
+    └── lib (optional, e.g. JUnit)
+
 
 //*Problem Statement
 
