@@ -1,4 +1,4 @@
-package majorAssignmentTopic1;
+
 public class Character {
   
 		private String name;
