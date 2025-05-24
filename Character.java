@@ -17,6 +17,7 @@ public class Character {
 		private int intelligence; //variable for magic attack
 		private int defense;    // variable for defense points
 	
+    // Constructor to initialize character attributes
     public Character(String name, int health, int strength, int intelligence, int defense) {
         this.name = name;
         this.health = health;   
@@ -89,6 +90,7 @@ public class Character {
         }
     }
 
+    // Method to check if the character is alive
     public boolean isAlive() {
         if(this.health > 0) {
             return true; // Character is alive
