@@ -6,7 +6,8 @@ public class Dice {
     }
 
     public int roll() {
-        return (int)(Math.random() * DiceNum) + 1;
+      // Random Dice Range 0-5 
+        return (int)(Math.random() * DiceNum);  
     }
     
 
