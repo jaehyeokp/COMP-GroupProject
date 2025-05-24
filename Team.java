@@ -22,10 +22,11 @@ public class Team {
     this.members.add(character);
 }
 
-  public ArrayList<Character> getMenber() {
+  public ArrayList<Character> getMember() {
     return this.members;
   }
 
+  // member 어래이리스트에 있는 모든 인원을 검사해서 전부 죽었으면 true반환
   public boolean isDefeated() {
     for (Character member : members) {
       if (member.isAlive()) {
@@ -35,6 +36,7 @@ public class Team {
     return true;
   }
 
+  
   public ArrayList<Character> getAliveMembers() {
     ArrayList<Character> alivemember = new ArrayList<>();
     for (Character member : members) {
