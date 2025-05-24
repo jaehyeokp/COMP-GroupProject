@@ -27,11 +27,7 @@ public class Action {
     target.takeDamage(totalDamage);
     
     String resultMessage;
-        if (totalDamage == 0) {
-            resultMessage = actor.getName() + "이(가) " + this.name + "(으)로 " + target.getName() + "을(를) 공격했지만 아무런 피해도 주지 못했습니다.";
-        } else {
-            resultMessage = actor.getName() + "이(가) " + this.name + "(으)로 " + target.getName() + "에게 " + totalDamage + "의 피해를 입혔습니다!";
-        }
+    resultMessage = actor.getName() + " uses " + name + " on " + target.getName() + " for " + totalDamage + " damage.";
 
     if (!target.isAlive()) {
       resultMessage = target.getName() + " has been defeated by " + actor.getName() + " using " + name + ".";
