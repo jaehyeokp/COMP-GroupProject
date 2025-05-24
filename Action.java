@@ -6,4 +6,8 @@ public class Action {
    * 
    * + perform(actor:Character, target:Character )
    */
+  String name;
+  int damageModifier;
+
+  
 }
