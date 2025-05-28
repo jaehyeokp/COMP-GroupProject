@@ -1,55 +1,34 @@
-/**
- * The Character class represents a game character with basic attributes
- * such as health, strength, defense, and role (either a fighter or healer).
- * It supports combat actions like physical and magical attacks, as well as healing.
- */
+
 public class Character {
-    // === Fields ===
-    private String name;          // Character's name
-    private int health;           // Current health points
-    private int strength;         // Physical attack power
-    private int intelligence;     // Magic attack power
-    private int defense;          // Defense stat to reduce incoming damage
-    private boolean isHealer;     // Flag to determine if character is a healer
+    /*
+     *캐릭터의 스탯, 공격/방어 기능 담당
 
-    // === Constructors ===
 
-    /**
-     * Constructor for fighter-type characters.
-     *
-     * param name          the character's name
-     * param health        starting health pointss
-     * param strength      strength stat used for physical attacks
-     * param intelligence  intelligence stat used for magic attacks
-     * param defense       defense stat used to reduce damage
+     *  + attack(target: Character): string - 일반공격
+     *  + castSpell(targer:Character): String - 마법공격
+     *  + takeDamage(amount :int) : void - 데미지 입히기
+     *  + applyStatusEffects(): void : ---- 아직 보류 기능 뭔지 정확히X 
+     *  +isAlive(): boolean : 살았는지 죽었는지 
      */
-    public Character(String name, int health, int strength, int intelligence, int defense) {
+  
+		private String name;    // variable for character name
+		private int health; // variable for health points
+		private int strength;   // variable for physical attack
+		private int heal; //variable for healing teammate
+		private int defense;    // variable for defense points
+        private boolean isAlive; // variable to check if character is alive
+
+
+    // Constructor to initialize character attributes
+    public Character(String name, int health, int strength, int heal, int defense) {
         this.name = name;
-        this.health = health;
+        this.health = health;   
         this.strength = strength;
-        this.intelligence = intelligence;
+        this.heal = heal;
         this.defense = defense;
-        this.isHealer = false;
+        
     }
-
-    /**
-     * Constructor for healer-type characters.
-     * Healers have no attack stats (strength or intelligence).
-     *
-     * param name     the healer's name
-     * param health   starting health points
-     * param defense  defense stat
-     */
-    public Character(String name, int health, int defense) {
-        this.name = name;
-        this.health = health;
-        this.strength = 0;
-        this.intelligence = 0;
-        this.defense = defense;
-        this.isHealer = true;
-    }
-
-    // === Getters ===
+    // Getter methods for character attributes
 
     public String getName() {
         return name;
@@ -63,68 +42,64 @@ public class Character {
         return strength;
     }
 
-    public int getIntelligence() {
-        return intelligence;
+    public int getHeal() {
+        return heal;
     }
 
     public int getDefense() {
         return defense;
     }
-
-    public boolean isHealer() {
-        return isHealer;
+    
+    public boolean getIsAlive() {
+        if(this.health > 0) {
+            isAlive = true;
+        }
+        else {
+            isAlive = false;
+            System.out.println(this.name + " has died.");
+        }
+        return isAlive;
     }
 
-    // === Actions ===
+    // 추가적인 메소드들 (공격, 힐 등) 구현 필요
 
-    /**
-     * Performs a physical attack on a target character.
-     * Damage is calculated as attacker's strength minus target's defense.
-     *
-     * param target the target character to attack
-     */
+
     public void attackDamage(Character target) {
+        // Physical attack logic
         if (!this.isAlive()) {
             System.out.println(this.name + " cannot attack because they are dead.");
             return;
         }
-
         int damage = this.strength - target.getDefense();
         if (damage > 0) {
             target.takeDamage(damage);
             System.out.println(this.name + " attacks " + target.getName() + " for " + damage + " damage.");
-        } else {
+        } 
+        else {
             System.out.println(this.name + "'s attack was too weak to harm " + target.getName() + ".");
         }
     }
 
-    /**
-     * Performs a magic attack on a target character.
-     * Damage is calculated as intelligence minus defense.
-     *
-     * param target the target character to attack
-     */
-    public void abilityPower(Character target) {
+    public void healingTeammate(Character target) {
+        // Healing logic
         if (!this.isAlive()) {
-            System.out.println(this.name + " cannot cast a spell because they are dead.");
+            System.out.println(this.name + " cannot heal because they are dead.");
             return;
         }
-
-        int spellDamage = this.intelligence - target.getDefense();
-        if (spellDamage > 0) {
-            target.takeDamage(spellDamage);
-            System.out.println(this.name + " casts a spell on " + target.getName() + " for " + spellDamage + " damage.");
-        } else {
-            System.out.println(this.name + "'s spell was too weak to harm " + target.getName() + ".");
+        if (target == null || !target.isAlive()) {
+            System.out.println("Cannot heal a dead or non-existent character.");
+            return;
         }
+        if(target.getHealth() >= 30) {
+            System.out.println(target.getName() + " is already at full health.");
+            return; // target이 이미 30 이상의 체력을 가지고 있다면 힐을 하지 못함
+        }
+        int healAmount = this.heal + target.getHealth();
+        target.health = healAmount; // Heal the target character
+        System.out.println(this.name + " heals " + target.getName() + " for " + this.heal + " health points.");
+        
     }
 
-    /**
-     * Reduces the character's health by the given damage amount.
-     * Health cannot go below zero.
-     *
-     * param damage the amount of damage taken
-     */
     public void takeDamage(int damage) {
         this.health -= damage;
         if (this.health < 0) {
@@ -132,46 +107,14 @@ public class Character {
         }
     }
 
-    /**
-     * Heals a target character for a specified amount.
-     * Only characters marked as healers can use this method.
-     *
-     * param target the character to be healed
-     * param amount the amount of HP to heal
-     */
-    public void heal(Character target, int amount) {
-        if (!this.isHealer) {
-            System.out.println(this.name + " is not a healer and cannot heal.");
-            return;
-        }
-
-        if (!target.isAlive()) {
-            System.out.println(target.name + " is dead and cannot be healed.");
-            return;
-        }
-
-        if (target.health == 30) {
-            System.out.println(target.name + " is already at full health.");
-            return;
-        }
-
-        target.health += amount;
-        if (target.health > 30) target.health = 30;
-
-        System.out.println(this.name + " heals " + target.name + " for " + amount + " HP.");
-    }
-
-    /**
-     * Checks whether the character is alive.
-     *
-     *  return true if health is greater than 0, false otherwise
-     */
+    // Method to check if the character is alive
     public boolean isAlive() {
-        if (this.health > 0) {
-            return true;
-        } else {
+        if(this.health > 0) {
+            return true; // Character is alive
+        } 
+        else {
             System.out.println(this.name + " has died.");
-            return false;
+            return false; // Character is dead
         }
     }
 }
