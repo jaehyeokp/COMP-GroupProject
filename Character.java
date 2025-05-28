@@ -1,36 +1,40 @@
 
 public class Character {
-    // === Fields ===
-    private String name;          // Character's name
-    private int health;           // Current health points
-    private int strength;         // Physical attack power
-    private int intelligence;     // Magic attack power
-    private int defense;          // Defense stat to reduce incoming damage
-    private boolean isHealer;     // Flag to determine if character is a healer
+    /*
+     *캐릭터의 스탯, 공격/방어 기능 담당
 
-    // === Constructors ===
 
-    /**
-     * Constructor for fighter-type characters.
-     *
-     * param name          the character's name
-     * param health        starting health pointss
-     * param strength      strength stat used for physical attacks
-     * param intelligence  intelligence stat used for magic attacks
-     * param defense       defense stat used to reduce damage
+     *  + attack(target: Character): string - 일반공격
+     *  + healTeammate(target: Character): string - 팀원 힐힐
+     *  + takeDamage(amount :int) : void - 데미지 입히기 
+     *  + isAlive(): boolean : 살았는지 죽었는지 
      */
-    public Character(String name, int health, int strength, int intelligence, int defense) {
+  
+		private String name;    // variable for character name
+        private String teamName; 
+		private int health; // variable for health points
+		private int strength;   // variable for physical attack
+		private int heal; //variable for healing teammate
+		private int defense;    // variable for defense points
+
+    // Constructor to initialize character attributes
+    public Character(String name, String teamName, int health, int strength, int heal, int defense) {
         this.name = name;
+        this.teamName = teamName;
         this.health = health;   
         this.strength = strength;
         this.heal = heal;
         this.defense = defense;
-        
     }
+    
     // Getter methods for character attributes
 
     public String getName() {
         return name;
+    }
+
+    public String getTeamName() {
+        return teamName;
     }
 
     public int getHealth() {
@@ -49,15 +53,14 @@ public class Character {
         return defense;
     }
     
-    public boolean getIsAlive() {
-        if(this.health > 0) {
-            isAlive = true;
-        }
-        else {
-            isAlive = false;
-            System.out.println(this.name + " has died.");
-        }
-        return isAlive;
+    public boolean isAlive() {
+    if (this.health > 0) {
+        return true;
+    } 
+    else {
+        System.out.println(this.name + " has died.");
+        return false;
+    }
     }
 
     // 추가적인 메소드들 (공격, 힐 등) 구현 필요
@@ -89,6 +92,10 @@ public class Character {
             System.out.println("Cannot heal a dead or non-existent character.");
             return;
         }
+        if (!this.teamName.equals(target.getTeamName())) {
+            System.out.println(this.name + " cannot heal " + target.getName() + " because they are not on the same team.");
+            return; // 팀이 다르면 힐을 하지 못함
+        }
         if(target.getHealth() >= 30) {
             System.out.println(target.getName() + " is already at full health.");
             return; // target이 이미 30 이상의 체력을 가지고 있다면 힐을 하지 못함
@@ -103,17 +110,6 @@ public class Character {
         this.health -= damage;
         if (this.health < 0) {
             this.health = 0;
-        }
-    }
-
-    // Method to check if the character is alive
-    public boolean isAlive() {
-        if(this.health > 0) {
-            return true; // Character is alive
-        } 
-        else {
-            System.out.println(this.name + " has died.");
-            return false; // Character is dead
         }
     }
 }
