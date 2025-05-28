@@ -13,7 +13,7 @@ public class Character {
     private boolean isHealer;     // Flag to determine if character is a healer
 
     // === Constructors ===
-
+    /// 보이나요!!!!!!!!!!!!
     /**
      * Constructor for fighter-type characters.
      *
