@@ -5,6 +5,7 @@
 // 4) 턴 1번마다, 그 전 라운드 선택된 캐릭터 선택 못함( idea: recursice contains())
 
 //5 ) 공격할 상대 골랐는데 죽은상대면 선택 못하고 다시 선택해야함
+// 6) 힐 할 상대 피가 <30 언더면 무조건 힐가능하고 (힐 기본값+ 주사위 값)이 30 넘어갈 떄는 -> 무조건 30풀피로 충전
 
 Logic
 팀 A-> 팀 B -> 팀 A -> 팀 B --> 한 팀 전멸까지
@@ -47,4 +48,15 @@ R4 -팀B
 .
 .
 팀 A  vs 팀 B ( 팀 A 전멸) 
+
+
+
+/// 해야하는 것
+ 1.Client 클래스에서 Battle.startBattle() 호출하도록 하기
+
+ 2. 게임 흐름을 위한 Scanner로 입력 받기 (Scanner input = new Scanner(System.in);)
+
+ 3. 유닛 테스트는 아직 미구현 — JUnit 써서 CharacterTest, ActionTest 등 작성 필요
+
+ 4. README.txt, UML Diagram, 기여도 문서, Recursive 구조 구현 (아직 X) — 다음 단계!
 
