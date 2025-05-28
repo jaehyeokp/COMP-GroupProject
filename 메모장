@@ -60,3 +60,21 @@ R4 -팀B
 
  4. README.txt, UML Diagram, 기여도 문서, Recursive 구조 구현 (아직 X) — 다음 단계!
 
+//
+
+각 턴마다:
+
+공격자 또는 힐러 선택
+
+첫 턴이면 힐러 선택 불가 (if round == 1)
+
+상대 팀 중 살아있는 캐릭터 선택
+
+죽은 캐릭터 선택 못 하게 처리
+
+행동 수행 (공격 or 힐)
+
+공격은: Action.perform() 활용 + dice.roll()로 데미지 결정
+
+힐은 별도 HealAction 클래스로 따로 만들 것 추천
+
