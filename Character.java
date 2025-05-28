@@ -1,26 +1,25 @@
 
 public class Character {
-    /*
-     *캐릭터의 스탯, 공격/방어 기능 담당
+    // === Fields ===
+    private String name;          // Character's name
+    private int health;           // Current health points
+    private int strength;         // Physical attack power
+    private int intelligence;     // Magic attack power
+    private int defense;          // Defense stat to reduce incoming damage
+    private boolean isHealer;     // Flag to determine if character is a healer
 
+    // === Constructors ===
 
-     *  + attack(target: Character): string - 일반공격
-     *  + castSpell(targer:Character): String - 마법공격
-     *  + takeDamage(amount :int) : void - 데미지 입히기
-     *  + applyStatusEffects(): void : ---- 아직 보류 기능 뭔지 정확히X 
-     *  +isAlive(): boolean : 살았는지 죽었는지 
+    /**
+     * Constructor for fighter-type characters.
+     *
+     * param name          the character's name
+     * param health        starting health pointss
+     * param strength      strength stat used for physical attacks
+     * param intelligence  intelligence stat used for magic attacks
+     * param defense       defense stat used to reduce damage
      */
-  
-		private String name;    // variable for character name
-		private int health; // variable for health points
-		private int strength;   // variable for physical attack
-		private int heal; //variable for healing teammate
-		private int defense;    // variable for defense points
-        private boolean isAlive; // variable to check if character is alive
-
-
-    // Constructor to initialize character attributes
-    public Character(String name, int health, int strength, int heal, int defense) {
+    public Character(String name, int health, int strength, int intelligence, int defense) {
         this.name = name;
         this.health = health;   
         this.strength = strength;
