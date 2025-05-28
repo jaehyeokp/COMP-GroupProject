@@ -17,11 +17,11 @@ public class Character {
     /**
      * Constructor for fighter-type characters.
      *
-     * @param name          the character's name
-     * @param health        starting health points
-     * @param strength      strength stat used for physical attacks
-     * @param intelligence  intelligence stat used for magic attacks
-     * @param defense       defense stat used to reduce damage
+     * param name          the character's name
+     * param health        starting health pointss
+     * param strength      strength stat used for physical attacks
+     * param intelligence  intelligence stat used for magic attacks
+     * param defense       defense stat used to reduce damage
      */
     public Character(String name, int health, int strength, int intelligence, int defense) {
         this.name = name;
@@ -36,9 +36,9 @@ public class Character {
      * Constructor for healer-type characters.
      * Healers have no attack stats (strength or intelligence).
      *
-     * @param name     the healer's name
-     * @param health   starting health points
-     * @param defense  defense stat
+     * param name     the healer's name
+     * param health   starting health points
+     * param defense  defense stat
      */
     public Character(String name, int health, int defense) {
         this.name = name;
@@ -81,7 +81,7 @@ public class Character {
      * Performs a physical attack on a target character.
      * Damage is calculated as attacker's strength minus target's defense.
      *
-     * @param target the target character to attack
+     * param target the target character to attack
      */
     public void attackDamage(Character target) {
         if (!this.isAlive()) {
@@ -102,7 +102,7 @@ public class Character {
      * Performs a magic attack on a target character.
      * Damage is calculated as intelligence minus defense.
      *
-     * @param target the target character to attack
+     * param target the target character to attack
      */
     public void abilityPower(Character target) {
         if (!this.isAlive()) {
@@ -123,7 +123,7 @@ public class Character {
      * Reduces the character's health by the given damage amount.
      * Health cannot go below zero.
      *
-     * @param damage the amount of damage taken
+     * param damage the amount of damage taken
      */
     public void takeDamage(int damage) {
         this.health -= damage;
@@ -136,8 +136,8 @@ public class Character {
      * Heals a target character for a specified amount.
      * Only characters marked as healers can use this method.
      *
-     * @param target the character to be healed
-     * @param amount the amount of HP to heal
+     * param target the character to be healed
+     * param amount the amount of HP to heal
      */
     public void heal(Character target, int amount) {
         if (!this.isHealer) {
@@ -164,7 +164,7 @@ public class Character {
     /**
      * Checks whether the character is alive.
      *
-     * @return true if health is greater than 0, false otherwise
+     *  return true if health is greater than 0, false otherwise
      */
     public boolean isAlive() {
         if (this.health > 0) {
