@@ -17,10 +17,13 @@ public class Team {
    * 팀에 캐릭터를 추가합니다.
    * @param character 추가할 캐릭터 객체
    */
-  public void addMember(Character character) {
-    this.members.add(character);
-  }
-
+  public void addMember(Character c) {
+        if (containsCharacterRecursive(c.getName(), 0)) {
+            System.out.println(" Character with name '" + c.getName() + "' already exists!");
+        } else {
+            members.add(c);
+        }
+    }
   /**
    * 팀의 이름을 반환합니다.
    * @return 팀 이름
@@ -65,4 +68,19 @@ public class Team {
     }
     return aliveMembers;
   } 
+
+  // In Team class
+  //Team 객체 안의 캐릭터들 중에, 주어진 name과 같은 이름의 캐릭터가 있는지 재귀적으로 찾아 true 또는 false를 반환한다.
+public boolean containsCharacterRecursive(String name, int index) {
+    if (index >= members.size()){ 
+      return false; 
+    }
+
+    if (members.get(index).getName().equals(name)){
+        return true;
+    } 
+
+    return containsCharacterRecursive(name, index + 1);
+}
+
 }
