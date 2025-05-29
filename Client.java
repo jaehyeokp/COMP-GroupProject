@@ -8,6 +8,9 @@ public class Client {
     teamA.addMember(new Character("Iron Man", 30, 18,  3));   // 파이터
     // 힐러 캐릭터 추가 (이름, 체력, 방어력)
     teamA.addMember(new Character("Doctor Strange", 30, 4)); // 힐러
+      teamA.addMember(new Character("Doctor Strange", 30, 4)); // 힐러
+
+   
 
     // 팀 B 생성 및 멤버 추가
     Team teamB = new Team("DC Comics"); // 팀 이름 설정
