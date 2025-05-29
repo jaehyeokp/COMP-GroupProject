@@ -17,17 +17,16 @@ public class Action {
    */
   public String perform(Character actor, Character target, int diceRoll) {
     
-    if (!target.isAlive()) {
+    if (!target.isAlive()) {   // check if actor is alive
       return target.getName() + " is already defeated and cannot be targeted."; 
-    }   // check if actor is alive
-
+    }   
     
     int totalDamage = actor.getStrength() + damageModifier + diceRoll - target.getDefense();
     
     
-    if (totalDamage < 0) {
+    if (totalDamage < 0) {   // prevent negative damage
       totalDamage = 0; 
-    }  // prevent negative damage
+    }  
 
     target.takeDamage(totalDamage); 
     
@@ -36,18 +35,20 @@ public class Action {
     resultMessage = actor.getName() + " uses " + name + " on " + target.getName() 
                   + " (rolled: " + diceRoll + ")! Dealt " + totalDamage + " damage!";
 
-    // check if target is defeated by the action
-    if (!target.isAlive()) {
+    
+    if (!target.isAlive()) {   // check if target is defeated by the action
       resultMessage = target.getName() + " was defeated by " + actor.getName() + "'s " + name + " attack!";
     }
     return resultMessage;
   }
 
-  public String getName() {
+  // -- Getters --
+  
+  public String getName() {   // Returns the name of the action
     return name;
-  }
+  }   
 
-  public int getDamageModifier() {
+  public int getDamageModifier() {   // Returns the damage modifier of the action
     return damageModifier;
-  }
+  }   
 }
