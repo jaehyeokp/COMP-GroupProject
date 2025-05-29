@@ -15,23 +15,23 @@ public class Character {
     
     // -- Constructors --
 
-    public Character(String name, int health, int strength, int defense) {
+    // Constructor for Fighter
+    public Character(String name, int health, int strength, int defense) { // Constructor for Fighter
         this.name = name;
         this.health = health;
         this.strength = strength;
         this.defense = defense;
         this.isHealer = false;   // Indicates this is a Fighter character
-    }   // Constructor for Fighter
-
+    }   
     
-
+    // Constructor for Healer
     public Character(String name, int health, int defense) { 
         this.name = name;
         this.health = health;
         this.strength = 0;      // Healers have 0 strength except dice rolls
         this.defense = defense;
         this.isHealer = true;    
-    }   // Constructor for Healer
+    }   
 
 
     // -- Getters --
@@ -59,7 +59,6 @@ public class Character {
     // -- Actions --
 
     // Attack to the target character
-
     public void attackDamage(Character target) {
         if (!this.isAlive()) {
             System.out.println(this.name + " cannot attack because they are defeated.");
@@ -77,7 +76,6 @@ public class Character {
 
 
     // Reduces the character's health by the given amount of damage
-
     public void takeDamage(int damage) {
         this.health -= damage;
         if (this.health < 0) {
