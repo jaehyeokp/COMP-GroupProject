@@ -1,62 +1,55 @@
 import java.util.ArrayList;
-// import java.util.InputMismatchException; // 현재 코드에서 직접 사용되지 않음
 import java.util.Scanner;
 
 public class Battle {
-  // === 필드 (Fields) ===
-  private Team teamA;                     // A팀
-  private Team teamB;                     // B팀
-  private Dice dice;                      // 주사위 객체
-  private int roundNumber;                // 현재 라운드 번호
-  private Character lastActorTeamA;       // A팀의 직전 행동 캐릭터
-  private Character lastActorTeamB;       // B팀의 직전 행동 캐릭터
-  private Scanner scanner;                // 사용자 입력을 위한 Scanner 객체
+  // --- Fields ----
+  private Team teamA;                     
+  private Team teamB;                     
+  private Dice dice;                      // Dice object for rolling
+  private int roundNumber;                // Current round number
+  private Character lastActorTeamA;       // Last character that acted for Team A
+  private Character lastActorTeamB;       // Last character that acted for Team B
+  private Scanner scanner;                
 
-  // 기본 공격 액션 (모든 캐릭터가 사용 가능)
-  private final Action BASIC_ATTACK = new Action("Basic Attack", 0); // 이름, 데미지 보정치
+  // Basic attack action available to all characters
+  private final Action BASIC_ATTACK = new Action("Basic Attack", 0); // name, damage modifier
 
-  // 기본 치유량 (힐러가 사용)
+  // default heal amount for healers
   private final int HEAL_AMOUNT = 10;
 
-  /**
-   * Battle 생성자
-   * @param teamA A팀 객체
-   * @param teamB B팀 객체
-   */
+  //Battle constructor
   public Battle(Team teamA, Team teamB) {
     this.teamA = teamA;
     this.teamB = teamB;
     this.dice = new Dice();
     this.roundNumber = 1;
-    this.lastActorTeamA = null; // 초기에는 직전 행동 캐릭터 없음
+    this.lastActorTeamA = null; // No last actor initially
     this.lastActorTeamB = null;
     this.scanner = new Scanner(System.in);
   }
 
-  /**
-   * 전투를 시작하고 한 팀이 패배할 때까지 진행합니다.
-   */
+   //Starts the battle and continues until one team is defeated.
   public void startBattle() {
     System.out.println("Battle Start! " + teamA.getTeamName() + " vs " + teamB.getTeamName());
-    displayTeamStatus(teamA); // 초기 팀 상태 표시
+    displayTeamStatus(teamA); // Show initial team status
     displayTeamStatus(teamB);
 
-    // 한 팀이라도 패배하지 않은 동안 전투 계속
+    // Keep fighting until one team is defeated
     while (!teamA.isDefeated() && !teamB.isDefeated()) {
       System.out.println("\n--- Round " + roundNumber + " ---");
 
-      // 홀수 라운드는 A팀, 짝수 라운드는 B팀의 턴
+      // Odd rounds are Team A's turn, Even rounds are Team B's turn
       if (roundNumber % 2 != 0) {
-        handleTurn(teamA, teamB, true); // true는 A팀의 실제 턴임을 의미
-        if (teamB.isDefeated()) break; // B팀이 패배하면 전투 종료
+        handleTurn(teamA, teamB, true); // true means Team A's turn
+        if (teamB.isDefeated()) break; 
       } else {
-        handleTurn(teamB, teamA, false); // false는 B팀의 실제 턴임을 의미
-        if (teamA.isDefeated()) break; // A팀이 패배하면 전투 종료
+        handleTurn(teamB, teamA, false); // false means Team B's turn
+        if (teamA.isDefeated()) break; 
       }
-      roundNumber++; // 다음 라운드로
+      roundNumber++; // go next round
     }
-    determineWinner(); // 승자 판별
-    scanner.close();   // Scanner 자원 해제
+    determineWinner(); // Figure out who won
+    scanner.close();   
   }
 
   /**
