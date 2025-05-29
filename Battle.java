@@ -37,7 +37,7 @@ public class Battle {
    * 전투를 시작하고 한 팀이 패배할 때까지 진행합니다.
    */
   public void startBattle() {
-    System.out.println("\n⚔️ Battle Start! " + teamA.getTeamName() + " vs " + teamB.getTeamName() + " ⚔️");
+    System.out.println("Battle Start! " + teamA.getTeamName() + " vs " + teamB.getTeamName());
     displayTeamStatus(teamA); // 초기 팀 상태 표시
     displayTeamStatus(teamB);
 
@@ -320,9 +320,9 @@ public class Battle {
   private void determineWinner() {
     System.out.println("\n--- Battle Over ---");
     if (teamA.isDefeated()) { // A팀이 패배한 경우
-      System.out.println("🎉 " + teamB.getTeamName() + " wins! 🎉");
+      System.out.println(teamB.getTeamName() + " wins!");
     } else if (teamB.isDefeated()) { // B팀이 패배한 경우
-      System.out.println("🎉 " + teamA.getTeamName() + " wins! 🎉");
+      System.out.println(teamA.getTeamName() + " wins!");
     } else {
       System.out.println("The battle is a draw!"); 
     }
