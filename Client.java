@@ -1,20 +1,29 @@
+// import java.util.Scanner; // Battle 클래스에서 Scanner를 사용하므로, 여기서는 직접 필요 없으나 일관성을 위해 유지 가능
+
 public class Client {
   public static void main(String[] args) {
-    Team teamA = new Team("Team A");
+    // 팀 A 생성 및 멤버 추가
+    Team teamA = new Team("Marvel Comics"); // 팀 이름 설정
+    teamA.addMember(new Character("Hulk", 30, 16,  2)); // 파이터: 이름, 체력, 힘, 지능, 방어력
+    teamA.addMember(new Character("Iron Man", 30, 18,  3));   // 파이터
+    // 힐러 캐릭터 추가 (이름, 체력, 방어력)
+    teamA.addMember(new Character("Doctor Strange", 30, 4)); // 힐러
 
+    // 팀 B 생성 및 멤버 추가
+    Team teamB = new Team("DC Comics"); // 팀 이름 설정
+    teamB.addMember(new Character("Batman", 30, 20,  5));    // 파이터
+    teamB.addMember(new Character("Superman", 30, 14,  10));   // 파이터
+    // 힐러 캐릭터 추가
+    teamB.addMember(new Character("Joker", 30, 3));      // 힐러 (원작과 다를 수 있지만 게임 밸런스를 위함)
 
-    teamA.addMember(new Character("Attacker Aang", "Team A", 30, 8, 6, 5));
-    teamA.addMember(new Character("Sword Man Katara", "Team A", 30, 6, 7, 4));
-    teamA.addMember(new Character("Archer Toph", "Team A", 30, 9, 3, 6));
-    teamA.addMember(new Character("Soldier Sokka", "Team A", 30, 7, 5, 5));
-    teamA.addMember(new Character("Healer Haru", "Team A", 30, 6, 4, 6));
+    System.out.println(" ### Masters of MQ: Turn-Based RPG Combat ### ");
+    System.out.println("==============================================");
 
-    Team teamB = new Team("Team B");
-  teamB.addMember(new Character("Attacker Zuko", "Team B", 30, 8, 5, 5));
-  teamB.addMember(new Character("Sword Man Azula", "Team B", 30, 7, 6, 4));
-  teamB.addMember(new Character("Archer Mai", "Team B", 0, 6, 4, 6));
-  teamB.addMember(new Character("Soldier Lee", "Team B", 30, 7, 5, 5));
-  teamB.addMember(new Character("Healer Iroh", "Team B", 30, 6, 7, 4));
+    // 전투 시작
+    Battle battle = new Battle(teamA, teamB);
+    battle.startBattle(); // 전투 시작 메소드 호출
 
+    // System.out.println("==============================================");
+    System.out.println(" ### Game Over. ### ");
   }
 }

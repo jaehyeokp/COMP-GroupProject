@@ -1,40 +1,53 @@
-
+/**
+ * Character 클래스는 게임 캐릭터를 나타내며, 체력, 힘, 방어력과 같은 기본 속성과
+ * 파이터 또는 힐러로서의 역할을 가집니다. 물리 공격, 마법 공격, 치유와 같은 전투 행동을 지원합니다.
+ */
 public class Character {
-    /*
-     *캐릭터의 스탯, 공격/방어 기능 담당
+    // === 필드 (Fields) ===
+    private String name;          // 캐릭터 이름
+    private int health;           // 현재 체력
+    private int strength;         // 물리 공격력     
+    private int defense;          // 방어력
+    private boolean isHealer;     // 힐러 여부 플래그
 
+    // === 생성자 (Constructors) ===
 
-     *  + attack(target: Character): string - 일반공격
-     *  + healTeammate(target: Character): string - 팀원 힐힐
-     *  + takeDamage(amount :int) : void - 데미지 입히기 
-     *  + isAlive(): boolean : 살았는지 죽었는지 
+    /**
+     * 파이터 타입 캐릭터 생성자.
+     *
+     * @param name          캐릭터 이름
+     * @param health        시작 체력
+     * @param strength      물리 공격력 스탯
+     * @param defense       방어력 스탯
      */
-  
-		private String name;    // variable for character name
-        private String teamName; 
-		private int health; // variable for health points
-		private int strength;   // variable for physical attack
-		private int heal; //variable for healing teammate
-		private int defense;    // variable for defense points
-
-    // Constructor to initialize character attributes
-    public Character(String name, String teamName, int health, int strength, int heal, int defense) {
+    public Character(String name, int health, int strength, int defense) {
         this.name = name;
-        this.teamName = teamName;
-        this.health = health;   
+        this.health = health;
         this.strength = strength;
-        this.heal = heal;
         this.defense = defense;
+        this.isHealer = false; // 파이터는 힐러가 아님
     }
-    
-    // Getter methods for character attributes
+
+    /**
+     * 힐러 타입 캐릭터 생성자.
+     * 힐러는 기본적으로 공격 스탯(힘, 지능)이 0으로 설정됩니다.
+     *
+     * @param name     힐러 이름
+     * @param health   시작 체력
+     * @param defense  방어력 스탯
+     */
+    public Character(String name, int health, int defense) {
+        this.name = name;
+        this.health = health;
+        this.strength = 0;       // 힐러는 힘 0
+        this.defense = defense;
+        this.isHealer = true;    // 힐러로 설정
+    }
+
+    // === 게터 (Getters) ===
 
     public String getName() {
         return name;
-    }
-
-    public String getTeamName() {
-        return teamName;
     }
 
     public int getHealth() {
@@ -45,71 +58,97 @@ public class Character {
         return strength;
     }
 
-    public int getHeal() {
-        return heal;
-    }
-
     public int getDefense() {
         return defense;
     }
-    
-    public boolean isAlive() {
-    if (this.health > 0) {
-        return true;
-    } 
-    else {
-        System.out.println(this.name + " has died.");
-        return false;
-    }
+
+    public boolean isHealer() {
+        return isHealer;
     }
 
-    // 추가적인 메소드들 (공격, 힐 등) 구현 필요
+    // === 행동 (Actions) ===
 
-
+    /**
+     * 대상 캐릭터에게 물리 공격을 수행합니다. (게임 로직에서는 주로 Action 클래스의 perform 사용)
+     * 데미지는 공격자의 힘 - 대상의 방어력으로 계산됩니다.
+     *
+     * @param target 공격 대상 캐릭터
+     */
     public void attackDamage(Character target) {
-        // Physical attack logic
         if (!this.isAlive()) {
-            System.out.println(this.name + " cannot attack because they are dead.");
+            System.out.println(this.name + " cannot attack because they are defeated.");
             return;
         }
+
         int damage = this.strength - target.getDefense();
         if (damage > 0) {
             target.takeDamage(damage);
             System.out.println(this.name + " attacks " + target.getName() + " for " + damage + " damage.");
-        } 
-        else {
+        } else {
             System.out.println(this.name + "'s attack was too weak to harm " + target.getName() + ".");
         }
     }
 
-    public void healingTeammate(Character target) {
-        // Healing logic
-        if (!this.isAlive()) {
-            System.out.println(this.name + " cannot heal because they are dead.");
-            return;
-        }
-        if (target == null || !target.isAlive()) {
-            System.out.println("Cannot heal a dead or non-existent character.");
-            return;
-        }
-        if (!this.teamName.equals(target.getTeamName())) {
-            System.out.println(this.name + " cannot heal " + target.getName() + " because they are not on the same team.");
-            return; // 팀이 다르면 힐을 하지 못함
-        }
-        if(target.getHealth() >= 30) {
-            System.out.println(target.getName() + " is already at full health.");
-            return; // target이 이미 30 이상의 체력을 가지고 있다면 힐을 하지 못함
-        }
-        int healAmount = this.heal + target.getHealth();
-        target.health = healAmount; // Heal the target character
-        System.out.println(this.name + " heals " + target.getName() + " for " + this.heal + " health points.");
-        
-    }
+    /**
+     * 대상 캐릭터에게 마법 공격을 수행합니다. (게임 로직에서는 주로 Action 클래스의 perform 사용)
+     * 데미지는 지능 - 방어력으로 계산됩니다.
+     *
+  
 
+    /**
+     * 캐릭터의 체력을 주어진 데미지만큼 감소시킵니다.
+     * 체력은 0 미만으로 내려갈 수 없습니다.
+     *
+     * @param damage 받은 데미지 양
+     */
     public void takeDamage(int damage) {
         this.health -= damage;
         if (this.health < 0) {
-            this.health = 0;
+            this.health = 0; // 체력이 0 미만이 되지 않도록
         }
+    }
+
+    /**
+     * 대상 캐릭터를 지정된 양만큼 치유합니다.
+     * 힐러 캐릭터만 이 메소드를 사용할 수 있습니다.
+     * 체력은 최대치(여기서는 30으로 가정)를 초과할 수 없습니다.
+     *
+     * @param target 치유 대상 캐릭터
+     * @param amount 치유량
+     */
+    public void heal(Character target, int amount) {
+        if (!this.isHealer) {
+            System.out.println(this.name + " is not a healer and cannot heal.");
+            return;
+        }
+
+        // 예외 케이스 2: 죽은 캐릭터는 살릴 수 없음
+        if (!target.isAlive()) {
+            System.out.println(target.getName() + " is already defeated and cannot be healed.");
+            return;
+        }
+
+        // 예외 케이스 3: 체력이 가득 찬 캐릭터는 치유할 수 없음
+        if (target.getHealth() == 30) { // 최대 체력을 30으로 가정
+            System.out.println(target.getName() + " is already at full health.");
+            return;
+        }
+
+        target.health += amount;
+        if (target.health > 30) { // 최대 체력 30을 넘지 않도록
+            target.health = 30;
+        }
+
+        System.out.println(this.name + " heals " + target.getName() + " for " + amount + " HP. Current HP: " + target.getHealth());
+    }
+
+    /**
+     * 캐릭터가 살아있는지 확인합니다.
+     *
+     * @return 체력이 0보다 크면 true, 아니면 false
+     */
+    public boolean isAlive() {
+        // 메시지 중복을 피하기 위해 System.out.println 제거
+        return this.health > 0;
     }
 }

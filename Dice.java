@@ -1,19 +1,17 @@
 public class Dice {
-  // + roll (max: int) int
-   private final int DiceNum=6;
+  // final 변수명은 ALL_UPPERS 관례, 주사위 면의 수 (0~5 결과 위해 6 사용)
+  private final int DICE_SIDES = 6; 
 
-    public Dice() {
-    }
+  public Dice() {
+  }
 
-    public int roll() {
-      // Random Dice Range 0-5 
-        return (int)(Math.random() * DiceNum);  
-    }
-    
-
-    // 이 부분은 확인용 나중에 지워야함! 
-    public static void main(String[] args) {
-        Dice d1= new Dice();
-        System.out.println("Test: "+ d1.roll());
-    }
+  /**
+   * 주사위를 굴려 0에서 (DICE_SIDES - 1) 사이의 값을 반환합니다.
+   * 현재 DICE_SIDES가 6이므로 0~5 사이의 값을 반환합니다.
+   * @return 주사위 눈의 값
+   */
+  public int roll() {
+    // Random Dice Range 0-5 
+    return (int)(Math.random() * DICE_SIDES+1);  
+  }
 }
