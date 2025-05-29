@@ -1,28 +1,33 @@
 public class Action {
-  
+  // Fields
+
   String name; 
-  int damageModifier; 
+  int damageModifier;  // Base damage modifier for the action
 
   
+  //Constructor for Action.
   public Action(String name, int damageModifier) {
     this.name =name;
     this.damageModifier = damageModifier;
   }
     
- 
+  /*
+   * Performs the action on the target character.
+   * Damage is calculated as: actor's strength + action's damage modifier + dice roll - target's defense.
+   */
   public String perform(Character actor, Character target, int diceRoll) {
-    // check if actor is alive
+    
     if (!target.isAlive()) {
       return target.getName() + " is already defeated and cannot be targeted."; 
-    }
+    }   // check if actor is alive
 
     
     int totalDamage = actor.getStrength() + damageModifier + diceRoll - target.getDefense();
     
-    // prevent negative damage
+    
     if (totalDamage < 0) {
       totalDamage = 0; 
-    }
+    }  // prevent negative damage
 
     target.takeDamage(totalDamage); 
     

@@ -1,51 +1,39 @@
-/**
- * Character 클래스는 게임 캐릭터를 나타내며, 체력, 힘, 방어력과 같은 기본 속성과
- * 파이터 또는 힐러로서의 역할을 가집니다. 물리 공격, 마법 공격, 치유와 같은 전투 행동을 지원합니다.
+/*
+ * The Character class represents a game character, with basic attributes and their role (Fighter or Healer).
+ * Supports combat actions like physical attacks and healing.
  */
 public class Character {
-    // === 필드 (Fields) ===
-    private String name;          // 캐릭터 이름
-    private int health;           // 현재 체력
-    private int strength;         // 물리 공격력     
-    private int defense;          // 방어력
-    private boolean isHealer;     // 힐러 여부 플래그
+    
+    
 
-    // === 생성자 (Constructors) ===
+    private String name;          
+    private int health;          
+    private int strength;        
+    private int defense;          
+    private boolean isHealer;   
 
-    /**
-     * 파이터 타입 캐릭터 생성자.
-     *
-     * @param name          캐릭터 이름
-     * @param health        시작 체력
-     * @param strength      물리 공격력 스탯
-     * @param defense       방어력 스탯
-     */
+    
     public Character(String name, int health, int strength, int defense) {
         this.name = name;
         this.health = health;
         this.strength = strength;
         this.defense = defense;
-        this.isHealer = false; // 파이터는 힐러가 아님
-    }
+        this.isHealer = false;  
+    }   // Constructor for Fighter
 
-    /**
-     * 힐러 타입 캐릭터 생성자.
-     * 힐러는 기본적으로 공격 스탯(힘, 지능)이 0으로 설정됩니다.
-     *
-     * @param name     힐러 이름
-     * @param health   시작 체력
-     * @param defense  방어력 스탯
-     */
+    
+
     public Character(String name, int health, int defense) {
         this.name = name;
         this.health = health;
-        this.strength = 0;       // 힐러는 힘 0
+        this.strength = 0;       
         this.defense = defense;
-        this.isHealer = true;    // 힐러로 설정
-    }
+        this.isHealer = true;    
+    }   // Constructor for Healer
 
-    // === 게터 (Getters) ===
 
+    // -- Getters --
+    
     public String getName() {
         return name;
     }
@@ -66,14 +54,8 @@ public class Character {
         return isHealer;
     }
 
-    // === 행동 (Actions) ===
+    // -- Actions --
 
-    /**
-     * 대상 캐릭터에게 물리 공격을 수행합니다. (게임 로직에서는 주로 Action 클래스의 perform 사용)
-     * 데미지는 공격자의 힘 - 대상의 방어력으로 계산됩니다.
-     *
-     * @param target 공격 대상 캐릭터
-     */
     public void attackDamage(Character target) {
         if (!this.isAlive()) {
             System.out.println(this.name + " cannot attack because they are defeated.");
