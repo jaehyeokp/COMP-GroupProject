@@ -1,26 +1,19 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * The Battle class controls the turn-based combat between two teams.
- * It manages turn logic, character actions, and displays results.
- */
 public class Battle {
 
-    private Team teamA;
-    private Team teamB;
-    private Dice dice;
-    private int roundNumber;
-    private Character lastActorTeamA;
-    private Character lastActorTeamB;
-    private Scanner scanner;
+    private Team teamA;  // Team A instance
+    private Team teamB;  // Team B instance
+    private Dice dice;   // Dice for random rolls
+    private int roundNumber;  // Current round number
+    private Character lastActorTeamA;  // Last actor from team A
+    private Character lastActorTeamB;  // Last actor from team B
+    private Scanner sc;  // Scanner for user input
 
-    private final Action BASIC_ATTACK = new Action("Basic Attack", 0);
-    private final int HEAL_AMOUNT = 10;
+    private final Action BASIC_ATTACK = new Action("Basic Attack", 0);  // Basic attack action
+    private final int HEAL_AMOUNT = 10;  // Fixed heal amount
 
-    /**
-     * Constructs a Battle instance with two teams.
-     */
     public Battle(Team teamA, Team teamB) {
         this.teamA = teamA;
         this.teamB = teamB;
@@ -28,19 +21,19 @@ public class Battle {
         this.roundNumber = 1;
         this.lastActorTeamA = null;
         this.lastActorTeamB = null;
-        this.scanner = new Scanner(System.in);
+        this.sc = new Scanner(System.in);
     }
 
-    /**
-     * Starts the battle loop until one team is defeated.
-     */
+    // Starts the battle loop between the two teams
     public void startBattle() {
-        System.out.println("\nBattle Start! " + teamA.getTeamName() + " vs " + teamB.getTeamName());
+        System.out.println("");
+        System.out.println("Battle Start! " + teamA.getTeamName() + " vs " + teamB.getTeamName());
         displayTeamStatus(teamA);
         displayTeamStatus(teamB);
 
         while (!teamA.isDefeated() && !teamB.isDefeated()) {
-            System.out.println("\n--- Round " + roundNumber + " ---");
+            System.out.println("");
+            System.out.println("------- Round " + roundNumber + " -------");
 
             if (roundNumber % 2 != 0) {
                 handleTurn(teamA, teamB, true);
@@ -52,18 +45,21 @@ public class Battle {
             roundNumber++;
         }
         determineWinner();
-        scanner.close();
+        sc.close();
     }
 
-    /**
-     * Handles one team's turn in the battle.
-     */
+    // Handles the logic for a team's turn
     private void handleTurn(Team currentTeam, Team opponentTeam, boolean isTeamAActualTurn) {
-        System.out.println("\n>> " + currentTeam.getTeamName() + "'s Turn <<");
+        System.out.println("");
+        System.out.println(">> " + currentTeam.getTeamName() + "'s Turn <<");
+        Character lastActor;
 
-        Character actor = selectActor(currentTeam,
-            isTeamAActualTurn ? lastActorTeamA : lastActorTeamB,
-            roundNumber <= 2);
+        if (isTeamAActualTurn) {
+            lastActor = lastActorTeamA;
+        } else {
+            lastActor = lastActorTeamB;
+        }
+        Character actor = selectActor(currentTeam, lastActor, roundNumber <= 2);
 
         if (actor == null) {
             System.out.println(currentTeam.getTeamName() + " has no available characters this turn.");
@@ -81,7 +77,8 @@ public class Battle {
         if (roundNumber <= 2) {
             System.out.println("First turn: Only attack is allowed (healers wait).");
             performAttackAction(actor, opponentTeam);
-        } else {
+        } 
+        else {
             System.out.println("Choose action for '" + actor.getName() + "':");
             System.out.println("1. Attack");
             if (actor.isHealer()) {
@@ -90,18 +87,24 @@ public class Battle {
 
             int actionChoice = -1;
             while (actionChoice == -1) {
-                try {
-                    System.out.print("Enter choice: ");
-                    actionChoice = Integer.parseInt(scanner.nextLine());
+                System.out.print("Enter choice: ");
+                actionChoice = sc.nextInt();
+                sc.nextLine();
 
-                    if (actionChoice == 1 || (actionChoice == 2 && actor.isHealer())) {
-                        break;
-                    } else {
-                        System.out.println("Invalid choice. Please enter 1" + (actor.isHealer() ? " or 2" : "") + ".");
-                        actionChoice = -1;
+                if (actionChoice == 1) {
+                    break;
+                } 
+                else if (actionChoice == 2 && actor.isHealer()) {
+                    break;
+                }
+                 else {
+                    if (actor.isHealer()) {
+                        System.out.println("Invalid choice. Please enter 1 or 2.");
+                    } 
+                    else {
+                        System.out.println("Invalid choice. Please enter 1.");
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("Enter a number.");
+                    actionChoice = -1;
                 }
             }
 
@@ -115,27 +118,29 @@ public class Battle {
         displayTeamStatus(teamB);
     }
 
-    /**
-     * Lets the team select a character to act.
-     */
+    // Selects which character from the team will act this turn
     private Character selectActor(Team team, Character lastActor, boolean isFirstTurnForTeam) {
         ArrayList<Character> aliveMembers = team.getAliveMembers();
-        if (aliveMembers.isEmpty()) return null;
-
+        if (aliveMembers.isEmpty()) {
+            return null;
+        }
         ArrayList<Character> selectable = new ArrayList<>();
         System.out.println("Pick a character to act:");
 
         int index = 1;
-        for (Character member : aliveMembers) {
+        for (int i = 0; i < aliveMembers.size(); i++) {
+            Character member = aliveMembers.get(i);
             boolean canSelect = true;
 
             if (member == lastActor) {
                 System.out.println(index + ". " + member.getName() + " (acted last turn, skip)");
                 canSelect = false;
-            } else if (isFirstTurnForTeam && member.isHealer()) {
+            } 
+            else if (isFirstTurnForTeam && member.isHealer()) {
                 System.out.println(index + ". " + member.getName() + " (healer, skips first turn)");
                 canSelect = false;
-            } else {
+            } 
+            else {
                 System.out.println(index + ". " + member.getName() + " (HP: " + member.getHealth() + ")");
             }
 
@@ -143,33 +148,34 @@ public class Battle {
             index++;
         }
 
-        if (selectable.isEmpty()) return null;
-
+        if (selectable.isEmpty()) {
+            return null;
+        }
         Character selected = null;
         while (selected == null) {
             System.out.print("Enter number: ");
-            try {
-                int choice = Integer.parseInt(scanner.nextLine()) - 1;
-                if (choice >= 0 && choice < aliveMembers.size()) {
-                    Character picked = aliveMembers.get(choice);
-                    if (selectable.contains(picked)) {
+            int choice = sc.nextInt() - 1;
+            sc.nextLine();
+            if (choice >= 0 && choice < aliveMembers.size()) {
+                Character picked = aliveMembers.get(choice);
+                for (int i = 0; i < selectable.size(); i++) {
+                    if (selectable.get(i) == picked) {
                         selected = picked;
-                    } else {
-                        System.out.println("That character can't act now.");
+                        break;
                     }
-                } else {
-                    System.out.println("Out of range.");
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Enter a valid number.");
+                if (selected == null) {
+                    System.out.println("That character can't act now.");
+                }
+            }
+             else {
+                System.out.println("Out of range.");
             }
         }
         return selected;
     }
 
-    /**
-     * Performs an attack action by actor to opponent.
-     */
+    // Executes attack action on the chosen target
     private void performAttackAction(Character actor, Team opponentTeam) {
         ArrayList<Character> targets = opponentTeam.getAliveMembers();
         if (targets.isEmpty()) return;
@@ -182,20 +188,19 @@ public class Battle {
 
         Character target = null;
         while (target == null) {
-            try {
-                int choice = Integer.parseInt(scanner.nextLine()) - 1;
-                if (choice >= 0 && choice < targets.size()) {
-                    Character picked = targets.get(choice);
-                    if (picked.isAlive()) {
-                        target = picked;
-                    } else {
-                        System.out.println("Already down.");
-                    }
-                } else {
-                    System.out.println("Invalid number.");
+            int choice = sc.nextInt() - 1;
+            sc.nextLine();
+            if (choice >= 0 && choice < targets.size()) {
+                Character picked = targets.get(choice);
+                if (picked.isAlive()) {
+                    target = picked;
+                } 
+                else {
+                    System.out.println("Already down.");
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Enter a number.");
+            }
+             else {
+                System.out.println("Invalid number.");
             }
         }
 
@@ -204,14 +209,13 @@ public class Battle {
         System.out.println(result);
     }
 
-    /**
-     * Performs a heal action by the healer to one of its teammates.
-     */
+    // Executes heal action on the chosen ally
     private void performHealAction(Character healer, Team ownTeam) {
         ArrayList<Character> targets = ownTeam.getAliveMembers();
         ArrayList<Character> healables = new ArrayList<>();
 
-        for (Character c : targets) {
+        for (int i = 0; i < targets.size(); i++) {
+            Character c = targets.get(i);
             if (c.getHealth() < 30) {
                 healables.add(c);
             }
@@ -222,7 +226,7 @@ public class Battle {
             return;
         }
 
-        System.out.println("Pick ally to heal:");
+        System.out.println("Pick teammate to heal:");
         for (int i = 0; i < healables.size(); i++) {
             Character ally = healables.get(i);
             System.out.println((i + 1) + ". " + ally.getName() + " (HP: " + ally.getHealth() + "/30)");
@@ -230,42 +234,47 @@ public class Battle {
 
         Character target = null;
         while (target == null) {
-            try {
-                int choice = Integer.parseInt(scanner.nextLine()) - 1;
-                if (choice >= 0 && choice < healables.size()) {
-                    target = healables.get(choice);
-                } else {
-                    System.out.println("Try a valid number.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Numbers only, please.");
+            int choice = sc.nextInt() - 1;
+            sc.nextLine();
+            if (choice >= 0 && choice < healables.size()) {
+                target = healables.get(choice);
+            } 
+            else {
+                System.out.println("Try a valid number.");
             }
         }
         healer.heal(target, HEAL_AMOUNT);
     }
 
-    /**
-     * Declares the winner based on team defeat.
-     */
+    // Determines the winner of the battle
     private void determineWinner() {
-        System.out.println("\n--- Battle Over ---");
+        System.out.println("");
+        System.out.println("------- Battle Over --------");
         if (teamA.isDefeated()) {
             System.out.println(teamB.getTeamName() + " wins!");
-        } else if (teamB.isDefeated()) {
+        } 
+        else if (teamB.isDefeated()) {
             System.out.println(teamA.getTeamName() + " wins!");
-        } else {
+        } 
+        else {
             System.out.println("It's a draw!");
         }
     }
 
-    /**
-     * Displays the health and status of each member of the team.
-     */
+    // Displays the current status (HP, alive/down) of team members
     private void displayTeamStatus(Team team) {
-        System.out.println("\n[" + team.getTeamName() + " Team Status]");
+        System.out.println("");
+        System.out.println("[" + team.getTeamName() + " Team Status]");
         ArrayList<Character> members = team.getMember();
-        for (Character member : members) {
-            String status = member.isAlive() ? "Alive" : "Down";
+        for (int i = 0; i < members.size(); i++) {
+            Character member = members.get(i);
+            String status;
+            if (member.isAlive()) {
+                status = "Alive";
+            } 
+            else {
+                status = "Down";
+            }
             System.out.println("- " + member.getName() + " (HP: " + member.getHealth() + "/30) [" + status + "]");
         }
     }
