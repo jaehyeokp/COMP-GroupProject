@@ -11,6 +11,12 @@ public class BattleTest {
     @Test
     public void testBattleEndsWithWinner() {
         // === Arrange ===
+
+        /*
+         * Tests the initial state of the battle
+         * Battle object creation.
+         * Teams are not defeated at the start.
+         */
         Team teamA = new Team("Marvel");
         teamA.addMember(new Character("Hulk", 30, 10, 2));
         teamA.addMember(new Character("Iron Man", 30, 8, 3));
@@ -23,7 +29,7 @@ public class BattleTest {
 
         Battle battle = new Battle(teamA, teamB);
 
-        // === Act & Assert ===
+        //Initial Battle State
         assertNotNull(battle, "Battle object should be created");
 
         // Teams should not be defeated at the start
