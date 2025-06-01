@@ -23,7 +23,7 @@ public class Character {
         this.isHealer = false;
     }
 
-    // Constructor for Heale
+    // Constructor for Healer
     public Character(String name, int health, int defense) {
         this.name = name;
         this.health = health;
