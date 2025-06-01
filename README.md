@@ -28,6 +28,7 @@ majorAssignmentRpgGame.zip
 // 최종검토 사항
 // 1-파일이름 , 팀원기여도 분배 ,how to run 미기재시 ,감점
 
+![image](https://github.com/user-attachments/assets/197f84d9-49ca-41e8-8b01-4cf8290a2bd3)
 
 //Component B(10%)
  1- 주석처리 : 메소드마다 - 이 메소드의 기능,이유,왜 등 핵심내용위주로만만
