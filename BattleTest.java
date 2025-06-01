@@ -1,15 +1,13 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
+/*
  * Unit test for the Battle class.
  * This test focuses on verifying initial team state and damage application logic.
  */
 public class BattleTest {
 
-    /**
-     * Tests that the battle starts with both teams alive and damage can be applied.
-     */
+    //Tests that the battle starts with both teams alive and damage can be applied.
     @Test
     public void testBattleEndsWithWinner() {
         // === Arrange ===

@@ -2,15 +2,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
-/**
+/*
  * Unit tests for the Team class.
  * These tests verify member addition, defeat status, and alive member retrieval.
  */
 public class TeamTest {
 
-    /**
-     * Tests that a character can be added to the team successfully.
-     */
+    // Tests that a character can be added to the team successfully.
     @Test
     public void testAddMember() {
         // Arrange
@@ -26,9 +24,7 @@ public class TeamTest {
         assertEquals(hulk, members.get(0), "The added member should be Hulk");
     }
 
-    /**
-     * Tests that isDefeated() returns false if at least one character is alive.
-     */
+    // Tests that isDefeated() returns false if at least one character is alive.
     @Test
     public void testIsDefeatedFalseWhenOneAlive() {
         // Arrange
@@ -44,9 +40,8 @@ public class TeamTest {
         assertFalse(team.isDefeated(), "Team should not be defeated if at least one member is alive");
     }
 
-    /**
-     * Tests that isDefeated() returns true if all characters are dead.
-     */
+    
+    //Tests that isDefeated() returns true if all characters are dead.
     @Test
     public void testIsDefeatedTrueWhenAllDead() {
         // Arrange
@@ -62,9 +57,8 @@ public class TeamTest {
         assertTrue(team.isDefeated(), "Team should be defeated if all members are dead");
     }
 
-    /**
-     * Tests that getAliveMembers() returns only characters with health > 0.
-     */
+    
+    // Tests that getAliveMembers() returns only characters with health > 0.
     @Test
     public void testGetAliveMembers() {
         // Arrange
