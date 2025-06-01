@@ -1,40 +1,52 @@
-/*
- * The Character class represents a game character, with basic attributes and their role (Fighter or Healer).
- * Supports combat actions like physical attacks and healing.
+/**
+ * The Character class represents a game character.
+ * It can be either a Fighter or a Healer, with stats like health, strength, and defense.
+ * Fighters can attack, and Healers can restore health to allies.
  */
 public class Character {
-    
-    
 
-    private String name;          
-    private int health;          
-    private int strength;        
-    private int defense;          
-    private boolean isHealer;   
+    // === Fields ===
 
-    
-    // -- Constructors --
+    private String name;          // Character's name
+    private int health;           // Current health points
+    private int strength;         // Offensive power (0 for Healer)
+    private int defense;          // Defensive resistance
+    private boolean isHealer;     // True if character is a healer
 
-    // Constructor for Fighter
-    public Character(String name, int health, int strength, int defense) { // Constructor for Fighter
+    // === Constructors ===
+
+    /**
+     * Constructor for Fighter characters.
+     *
+     * @param name     character name
+     * @param health   initial health
+     * @param strength attack strength
+     * @param defense  defense points
+     */
+    public Character(String name, int health, int strength, int defense) {
         this.name = name;
         this.health = health;
         this.strength = strength;
         this.defense = defense;
-        this.isHealer = false;   // Indicates this is a Fighter character
-    }   
-    
-    // Constructor for Healer
-    public Character(String name, int health, int defense) { 
+        this.isHealer = false;
+    }
+
+    /**
+     * Constructor for Healer characters (strength = 0 by default).
+     *
+     * @param name     character name
+     * @param health   initial health
+     * @param defense  defense points
+     */
+    public Character(String name, int health, int defense) {
         this.name = name;
         this.health = health;
-        this.strength = 0;      // Healers have 0 strength except dice rolls
+        this.strength = 0; // Healers have no attack strength
         this.defense = defense;
-        this.isHealer = true;    
-    }   
+        this.isHealer = true;
+    }
 
-
-    // -- Getters --
+    // === Getters ===
 
     public String getName() {
         return name;
@@ -56,9 +68,21 @@ public class Character {
         return isHealer;
     }
 
-    // -- Actions --
+    /**
+     * Returns true if the character is alive (health > 0).
+     */
+    public boolean isAlive() {
+        return this.health > 0;
+    }
 
-    // Attack to the target character
+    // === Combat Actions ===
+
+    /**
+     * Attacks a target character.
+     * Damage = this character's strength - target's defense.
+     *
+     * @param target the target character
+     */
     public void attackDamage(Character target) {
         if (!this.isAlive()) {
             System.out.println(this.name + " cannot attack because they are defeated.");
@@ -66,6 +90,7 @@ public class Character {
         }
 
         int damage = this.strength - target.getDefense();
+
         if (damage > 0) {
             target.takeDamage(damage);
             System.out.println(this.name + " attacks " + target.getName() + " for " + damage + " damage.");
@@ -74,18 +99,25 @@ public class Character {
         }
     }
 
-
-    // Reduces the character's health by the given amount of damage
+    /**
+     * Reduces this character's health by the given damage amount.
+     * Health is never allowed to go below 0.
+     *
+     * @param damage amount of damage taken
+     */
     public void takeDamage(int damage) {
         this.health -= damage;
         if (this.health < 0) {
-            this.health = 0; // Health cannot go below 0
+            this.health = 0;
         }
     }
 
-    /*
-     * Only Healer characters can use this method
-     * Health cannot exceed 30
+    /**
+     * Heals a target character (only usable by Healers).
+     * Healing cannot exceed 30 HP.
+     *
+     * @param target the character to be healed
+     * @param amount amount of health to restore
      */
     public void heal(Character target, int amount) {
         if (!this.isHealer) {
@@ -93,28 +125,21 @@ public class Character {
             return;
         }
 
-        // Cannot heal defeated characters
         if (!target.isAlive()) {
             System.out.println(target.getName() + " is already defeated and cannot be healed.");
             return;
         }
 
-        // Cannot heal characters already at full health
-        if (target.getHealth() == 30) { 
+        if (target.getHealth() == 30) {
             System.out.println(target.getName() + " is already at full health.");
             return;
         }
 
         target.health += amount;
-        if (target.health > 30) {  // Don't overheal past max health
+        if (target.health > 30) {
             target.health = 30;
         }
 
         System.out.println(this.name + " heals " + target.getName() + " for " + amount + " HP. Current HP: " + target.getHealth());
-    }
-
-    
-    public boolean isAlive() {  // Checks if the character is alive
-        return this.health > 0;
     }
 }
