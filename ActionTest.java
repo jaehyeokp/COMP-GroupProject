@@ -1,15 +1,13 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
+/*
  * Unit tests for the Action class.
  * Tests focus on damage calculation and defeated target conditions.
  */
 public class ActionTest {
 
-    /**
-     * Tests that perform() correctly deals damage and updates target health.
-     */
+    // Tests that perform() correctly deals damage and updates target health.
     @Test
     public void testPerformDealsCorrectDamage() {
         // Arrange: Create attacker, defender, and action
@@ -34,9 +32,8 @@ public class ActionTest {
             "Result message should mention the action name");
     }
 
-    /**
-     * Tests that perform() does not allow targeting an already defeated character.
-     */
+    
+    // Tests that perform() does not allow targeting an already defeated character.
     @Test
     public void testPerformOnAlreadyDefeatedTarget() {
         // Arrange: Defender starts with 0 HP (defeated)

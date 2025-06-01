@@ -1,15 +1,13 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
+/*
  * Unit tests for the Character class.
  * Tests focus on combat (attack) and healing behavior.
  */
 public class CharacterTest {
 
-    /**
-     * Tests that attacking another character reduces their health.
-     */
+    //Tests that attacking another character reduces their health.
     @Test
     public void testAttackDamage() {
         // Arrange
@@ -25,9 +23,7 @@ public class CharacterTest {
             "Defender's health should decrease after being attacked");
     }
 
-    /**
-     * Tests that healing increases the target's health correctly.
-     */
+    //Tests that healing increases the target's health correctly.
     @Test
     public void testHeal() {
         // Arrange
