@@ -27,7 +27,7 @@ public class Character {
     public Character(String name, int health, int defense) {
         this.name = name;
         this.health = health;
-        this.strength = 0; // Healers have 0 strength except dice rolls attack strength
+        this.strength = 0; // Healers have 0 strength
         this.defense = defense;
         this.isHealer = true;
     }
