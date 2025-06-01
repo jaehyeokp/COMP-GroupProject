@@ -193,8 +193,12 @@ public class Battle {
       }
       return selected;
     }
-  // Performs attack logic: selecting target and applying damage
-private void performAttackAction(Character actor, Team opponentTeam) {
+    // Performs attack logic: selecting target and applying damage
+    // Delegated attack action logic to its own method:
+    //  Keeps handleTurn() cleaner and focused only on high-level flow
+    //  Allows easy future modification or extension (ex: adding special attacks)
+    //  Avoids duplicating attack selection logic across multiple places
+    private void performAttackAction(Character actor, Team opponentTeam) {
     ArrayList<Character> targets = opponentTeam.getAliveMembers();
     if (targets.isEmpty()) return;  // No valid targets
 
@@ -228,6 +232,10 @@ private void performAttackAction(Character actor, Team opponentTeam) {
     }
 
     // Performs healing logic: selecting teammate and applying healing
+    // Delegated healing action logic to its own method:
+    //  Separates healer-specific logic from general turn handling
+    //  Improves readability and maintainability of the Battle class
+    //  Allows future extension (e.g., adding status effect removal, multi-target heals)
     private void performHealAction(Character healer, Team ownTeam) {
      ArrayList<Character> targets = ownTeam.getAliveMembers();
      ArrayList<Character> healables = new ArrayList<>();  // Store teammates that are not at full health

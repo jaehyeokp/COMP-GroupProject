@@ -55,7 +55,15 @@ public class Team {
         return aliveMembers;
     }
 
-    // Recursively finds if a character with the given name exists in the Team
+    // Recursively checks if a character with the given name exists in the team
+    // Reason for recursive approach:
+    //  Demonstrates understanding of recursion, an important COMP1010 learning goal
+    //  Code is short and elegant for small datasets (team size is small in this project)
+    //  Alternative (for loop) would work too, but recursion showcases call stack behavior
+
+    // Cons:
+    //  Slightly less efficient in memory (due to call stack) than a loop
+    //  Less scalable for large datasets (but acceptable here since teams are small)
     public boolean containsCharacterRecursive(String name, int index) {
         if (index >= members.size()) {
             return false;
@@ -64,7 +72,7 @@ public class Team {
         if (members.get(index).getName().equals(name)) {
             return true;
         }
-
+        // 
         return containsCharacterRecursive(name, index + 1);
     }
 }
