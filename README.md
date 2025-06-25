@@ -1,4 +1,3 @@
-# COMP1010-GroupK-
 
 COMP1010 Major Assignment –K  README
 =========================================================
