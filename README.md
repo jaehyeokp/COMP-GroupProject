@@ -1,5 +1,5 @@
 
-COMP1010 Major Assignment –K  README
+ Major Assignment –K  README
 =========================================================
 
 1. What problem does your application solve
